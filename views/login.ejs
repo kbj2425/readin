@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인 - 박자 맞추기</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="card">
+            <h1>박자 맞추기 게임</h1>
+            <p class="subtitle">로그인하여 게임을 시작하세요.</p>
+            <form action="/login" method="POST">
+                <div class="form-group">
+                    <label for="username">사용자 이름</label>
+                    <input type="text" id="username" name="username" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">비밀번호</label>
+                    <input type="password" id="password" name="password" class="form-input" required>
+                </div>
+                <% if (error) { %>
+                    <p class="error-message"><%= error %></p>
+                <% } %>
+                <button type="submit" class="btn btn-primary">로그인</button>
+            </form>
+            <p class="register-hint">처음이신가요? 원하는 사용자 이름과 비밀번호 '123456'을 입력해 가입하세요.</p>
+        </div>
+    </div>
+</body>
+</html>
