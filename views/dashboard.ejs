@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>대시보드</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="logo">박자 게임</div>
+        <div class="user-menu">
+            <button id="user-menu-btn" class="btn btn-secondary"><%= user.username %></button>
+            <div id="dropdown-menu" class="dropdown-content">
+                <a href="#" id="change-password-btn">비밀번호 변경</a>
+                <a href="/logout">로그아웃</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section id="game-section" class="card">
+            <h2>오늘의 도전</h2>
+            <% if (canPlay) { %>
+                <p>버튼을 눌러 박자를 듣고, 몇 번 재생되었는지 맞춰보세요!</p>
+                <button id="play-btn" class="btn btn-primary btn-large">박자 듣기</button>
+                <div id="game-controls" class="hidden">
+                    <div class="form-group">
+                        <label for="guess-input">정답 입력:</label>
+                        <input type="number" id="guess-input" class="form-input" placeholder="숫자를 입력하세요">
+                    </div>
+                    <button id="submit-guess-btn" class="btn btn-success">정답 제출</button>
+                </div>
+                 <% if (user.extraChances > 0) { %>
+                    <p class="info-message">추가 도전 기회가 <%= user.extraChances %>번 남았습니다.</p>
+                <% } %>
+            <% } else { %>
+                 <p class="info-message">오늘의 도전 기회를 모두 사용했습니다. 내일 다시 시도해주세요.</p>
+            <% } %>
+            <div id="result-message" class="result-message"></div>
+        </section>
+
+        <section id="history-section" class="card">
+            <h2>나의 기록</h2>
+            <ul id="history-list">
+                <% logs.forEach(log => { %>
+                    <li>
+                        <strong><%= new Date(log.date).toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' }) %>:</strong>
+                        내가 추측한 답: <%= log.guess %>, 정답: <%= log.answer %>
+                        <% if (log.guess === log.answer) { %>
+                            <span class="correct">✔ 정답</span>
+                        <% } else { %>
+                            <span class="incorrect">❌ 오답</span>
+                        <% } %>
+                    </li>
+                <% }) %>
+            </ul>
+        </section>
+    </main>
+
+    <div id="password-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h3>비밀번호 변경</h3>
+            <div class="form-group">
+                <label for="current-password">현재 비밀번호</label>
+                <input type="password" id="current-password" class="form-input">
+            </div>
+            <div class="form-group">
+                <label for="new-password">새 비밀번호</label>
+                <input type="password" id="new-password" class="form-input">
+            </div>
+            <p id="modal-error" class="error-message"></p>
+            <button id="submit-password-change" class="btn btn-primary">변경하기</button>
+        </div>
+    </div>
+    
+    <script src="/client.js"></script>
+</body>
+</html>
